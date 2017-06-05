@@ -45,8 +45,9 @@ void graphsearchtest::runTest()
 
     auto path2 = Grafz::find_min_path_with_dijkstra(*g, vert1, vert4);
     auto len = path2.size();
-
+    delete(g);
     CPPUNIT_ASSERT(len == 4);
+
 }
 
 
@@ -97,6 +98,7 @@ void graphsearchtest::runTest3()
   
     auto path_bellman_ford = find_min_path_with_bellman_ford(*h, vert1, vert8);
 
+    delete(h);
     CPPUNIT_ASSERT(path_bellman_ford.size() == 8);
 }
 
@@ -156,6 +158,7 @@ void graphsearchtest::runTest2()
     auto path_astar = Grafz::find_min_path_with_astar(*h, vert1, vert8, lm);
     auto path_dijkstra = Grafz::find_min_path_with_dijkstra(*h, vert1, vert8);
 
+    delete(h);
     CPPUNIT_ASSERT(path_astar.size() == 4);
     CPPUNIT_ASSERT(path_dijkstra.size() == 4);
 }

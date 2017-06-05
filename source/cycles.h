@@ -76,20 +76,20 @@ vector<vector<shared_ptr<T>>> merge_cycles(vector<vector<shared_ptr<T>>> cycles)
  */
 template<class T, class U>
 vector<vector<shared_ptr<T>>> add_to_path(Graph<T,U>& graph, map<shared_ptr<U>,edge_data<T,U>>& edge_visit_data,
-        shared_ptr<T> previous_vert, shared_ptr<T> current_vert, vector<shared_ptr<T>> * cyc_stack)
+        shared_ptr<T> previous_vert, shared_ptr<T> current_vert, vector<shared_ptr<T>> cyc_stack)
 {
 
     vector<vector<shared_ptr<T>>> cycle_list;
 
-    for(size_t i = 0; i < cyc_stack->size() - 1; i++)
+    for(size_t i = 0; i < cyc_stack.size() - 1; i++)
     {
-        auto vert = cyc_stack->at(i);
+        auto vert = cyc_stack.at(i);
         if(vert.get() == current_vert.get())
         {
             vector<shared_ptr<T>> cycle;
-            for(size_t j = i; j < cyc_stack->size(); j++)
+            for(size_t j = i; j < cyc_stack.size(); j++)
             {
-                cycle.push_back(cyc_stack->at(j));
+                cycle.push_back(cyc_stack.at(j));
             }
             cycle_list.push_back(cycle);
             return cycle_list;
@@ -97,7 +97,7 @@ vector<vector<shared_ptr<T>>> add_to_path(Graph<T,U>& graph, map<shared_ptr<U>,e
     }
 
     auto incident_edges = graph.find_incident_edges(current_vert);
-    cyc_stack->push_back(current_vert);
+    cyc_stack.push_back(current_vert);
     for(auto edgedata : incident_edges)
     {
         if(!edge_visit_data.find(edgedata)->second.is_visited())
@@ -117,7 +117,7 @@ vector<vector<shared_ptr<T>>> add_to_path(Graph<T,U>& graph, map<shared_ptr<U>,e
         edge_visit_data.find(edgedata)->second.set_visited(false);
     }
 
-    cyc_stack->pop_back();
+    cyc_stack.pop_back();
     return cycle_list;
 }
 
@@ -145,11 +145,11 @@ vector<vector<shared_ptr<T>>> find_all_cycles(Graph<T,U> &graph)
     {
         if(vert.get() == vertex.get())
             continue;
-        vector<shared_ptr<T>> * cyc_stack = new vector<shared_ptr<T>>();
-        cyc_stack->push_back(vertex);
+        vector<shared_ptr<T>>  cyc_stack;
+        cyc_stack.push_back(vertex);
         auto cycles_sub = add_to_path(graph, all_edge_data, vertex, vert, cyc_stack);
         cycle_vec.insert(cycle_vec.end(), cycles_sub.begin(), cycles_sub.end());
-        delete(cyc_stack);
+
     }
     return merge_cycles(cycle_vec);
 }

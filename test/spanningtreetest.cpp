@@ -68,6 +68,7 @@ void spanningtreetest::runTest()
 
     auto spanningtree = Grafz::find_minimum_spanning_tree<>(*h);
     cout << "spanning tree size is: " << spanningtree.size() << endl;
+    delete(h);
     CPPUNIT_ASSERT(spanningtree.size() == 7);
 }
 

@@ -69,6 +69,7 @@ void cycletest::runTest1()
 
     auto cyclesv = Grafz::find_all_cycles<>(*h);
     cout << "Cycle count for graph: " << cyclesv.size() << endl;
+    delete(h);
     CPPUNIT_ASSERT(cyclesv.size() == 6);
 }
 
@@ -92,6 +93,7 @@ void cycletest::runTest2()
     auto g = Grafz::generate_complete_graph(vs);
     auto cyclesv = Grafz::find_all_cycles<>(*(g.get()));
     cout << "Cycle count for complete graph K5: " << cyclesv.size() << endl;
+
     CPPUNIT_ASSERT(cyclesv.size() == 37);
 }
 
