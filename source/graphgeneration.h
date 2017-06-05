@@ -27,9 +27,8 @@ template<class T> std::shared_ptr<Graph<T, base_edge<T>>> generate_complete_grap
             edgevec.push_back(e);
         }
     }
-    auto graph = new Graph<T, base_edge<T>>(vertices, edgevec);
-    std::shared_ptr<Graph<T, base_edge<T>>> sharedg(graph);
-    return sharedg;
+    auto graph =  std::make_shared<Graph<T, base_edge<T>>> (vertices,edgevec);
+    return graph;
 }
 
 /**
@@ -63,14 +62,13 @@ std::shared_ptr<Graph<T,base_edge<T>>> generate_cyclic_graph(std::vector<std::sh
     //auto vertices = generate_vertices(vertex_count);
     std::vector<shared_ptr<base_edge<T>>> edgevec;
     for(uint32_t i = 0; i < vertices.size() - 1; i++){
-      auto e = std::make_shared<base_edge<T>>(vertices.at(i), vertices.at(i + 1));
-      edgevec.push_back(e);
+        auto e = std::make_shared<base_edge<T>>(vertices.at(i), vertices.at(i + 1));
+        edgevec.push_back(e);
     }
-     auto ex = std::make_shared<base_edge<T>>(vertices.at(vertices.size() - 1), vertices.at(0));
-      edgevec.push_back(ex);
-    auto graph = new Graph<T, base_edge<T>>(vertices, edgevec);
-    std::shared_ptr<Graph<T, base_edge<T>>> sharedg(graph);
-    return sharedg;
+    auto ex = std::make_shared<base_edge<T>>(vertices.at(vertices.size() - 1), vertices.at(0));
+    edgevec.push_back(ex);
+    auto graph =  std::make_shared<Graph<T, base_edge<T>>> (vertices, edgevec);
+    return graph;
 }
 
 
